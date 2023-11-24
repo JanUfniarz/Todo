@@ -1,4 +1,19 @@
+body {
+    background-color: darkolivegreen;
+}
+
 .todos {
     display: grid;
 
+}
+
+h1 {
+    display: grid;
+    place-items: center;
+}
+
+.action-bar {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
 }
