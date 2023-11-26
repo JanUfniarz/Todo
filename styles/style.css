@@ -1,0 +1,27 @@
+body {
+    background-color: rgb(52, 53, 65);
+}
+
+button {
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.todos {
+    display: grid;
+
+}
+
+.action-bar, h1 {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+h1 {
+    color: rgb(195, 101, 64);
+}
+
+#add-button {
+    background-color: rgb(215, 186, 125);
+}
