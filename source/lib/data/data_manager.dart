@@ -3,10 +3,7 @@ import 'dart:convert';
 import 'package:path/path.dart' as path;
 
 class DataManager {
-  final File _file;
-
-  DataManager(String fileName)
-      : _file = File(path.join(Directory.current.path, fileName));
+  final File _file = File(path.join(Directory.current.path, "data.json"));
 
   List<dynamic> get data => jsonDecode(_file.readAsStringSync());
 

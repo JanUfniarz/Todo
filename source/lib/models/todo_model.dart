@@ -4,7 +4,7 @@ import 'dart:html';
 class TodoModel {
   static int _savedID = 0;
 
-  static Element get empty => TodoModel._empty().div;
+  static DivElement get empty => TodoModel._empty().div;
   TodoModel._empty()
       : id = null,
         title = "Todo",
@@ -48,7 +48,7 @@ class TodoModel {
 
   void _init() => id ??= _savedID++;
 
-  Element get div => DivElement()
+  DivElement get div => DivElement()
     ..classes.add('todo')
     ..setAttribute('todo-id', id ?? 'null')
     ..children.addAll(<Element>[
