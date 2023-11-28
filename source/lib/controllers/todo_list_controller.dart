@@ -11,7 +11,13 @@ void main() {
       ..children.add(model(id).buildElement);
 
   DivElement addField = (document.querySelector("#add-field") as DivElement);
-  (addField.children[1] as ButtonElement).onClick.listen((event) { })
+  (addField.children[1] as ButtonElement).onClick.listen((event) {
+    todoView.children.add(
+        CheckField(
+            content: (addField.children[0] as TextInputElement).value!
+        ).buildElement
+    );
+  });
   (addField.children[0] as TextInputElement).value;
 }
 

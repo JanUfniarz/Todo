@@ -18,18 +18,12 @@ class TodoModel {
     _init();
   }
 
-  TodoModel.fromDiv(Element div)
-      : id = int.tryParse(div.getAttribute('todo-id') ?? 'null'),
-        title = div.querySelector('p')?.text ?? '',
-        checkFields = div
+  TodoModel.fromElement(Element element)
+      : id = int.tryParse(element.getAttribute('todo-id') ?? 'null'),
+        title = element.querySelector('p')?.text ?? '',
+        checkFields = element
             .querySelectorAll('.check-field')
-            .map((checkFieldDiv) => CheckField(
-                  done: (checkFieldDiv.querySelector('input[type="checkbox"]')
-                    as InputElement).checked ?? false,
-                  content:
-                      (checkFieldDiv.querySelector('p') as ParagraphElement)
-                          .text ?? '',
-                ))
+            .map((fieldDiv) => CheckField.fromElement(fieldDiv))
             .toList() {
     _init();
   }
@@ -38,10 +32,8 @@ class TodoModel {
       : id = jsonDecode(json)['id'],
         title = jsonDecode(json)['title'],
         checkFields = (jsonDecode(json)['checkFields'] as List<dynamic>)
-            .map((field) => CheckField(
-              content: field['content'],
-              done: field['done']
-        )).toList() {
+            .map((field) => CheckField.fromJson(field)
+        ).toList() {
     _init();
   }
 
@@ -56,21 +48,7 @@ class TodoModel {
         TextInputElement()..placeholder = "Change title"
       ]),
     ] +
-        checkFields.map((field) {
-          InputElement checkbox = InputElement(type: "checkbox")
-            ..checked = field.done;
-
-          // Dodawanie obsługi zdarzeń dla checkbox
-          checkbox.onChange
-              .listen((Event event) => field.done = checkbox.checked!);
-
-          return DivElement()
-            ..classes.add("check-field")
-            ..children.addAll(<Element>[
-              checkbox,
-              ParagraphElement()..text = field.content
-            ]);
-        }).toList());
+        checkFields.map((field) => field.buildElement).toList());
 
   String get json => jsonEncode({
         "id": id,
@@ -86,4 +64,29 @@ class CheckField {
   String content;
 
   CheckField({this.done = false, required this.content});
+
+  CheckField.fromJson(json)
+      : content = json['content'],
+        done = json['done'];
+
+  CheckField.fromElement(Element element)
+      : done = (element.querySelector('input[type="checkbox"]')
+            as InputElement).checked ?? false,
+        content = (element.querySelector('p') as ParagraphElement)
+            .text ?? '';
+
+  DivElement get buildElement {
+    InputElement checkbox = InputElement(type: "checkbox")
+      ..checked = done;
+
+    checkbox.onChange
+        .listen((Event event) => done = checkbox.checked!);
+
+    return DivElement()
+      ..classes.add("check-field")
+      ..children.addAll(<Element>[
+        checkbox,
+        ParagraphElement()..text = content
+      ]);
+  }
 }
