@@ -17,4 +17,4 @@ DivElement test() => TodoModel(
         checkFields: [
           CheckField(content: "testowe"
           )
-        ]).div;
+        ]).buildElement;

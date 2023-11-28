@@ -4,8 +4,7 @@ import 'dart:html';
 class TodoModel {
   static int _savedID = 0;
 
-  static DivElement get empty => TodoModel._empty().div;
-  TodoModel._empty()
+  TodoModel.empty()
       : id = null,
         title = "Todo",
         checkFields = [];
@@ -48,14 +47,17 @@ class TodoModel {
 
   void _init() => id ??= _savedID++;
 
-  DivElement get div => DivElement()
+  DivElement get buildElement => DivElement()
     ..classes.add('todo')
     ..setAttribute('todo-id', id ?? 'null')
     ..children.addAll(<Element>[
-          ParagraphElement()..text = 'Title: $title',
-        ] +
+      DivElement()..children.addAll(<Element>[
+        ParagraphElement()..text = "Title: $title",
+        TextInputElement()..placeholder = "Change title"
+      ]),
+    ] +
         checkFields.map((field) {
-          InputElement checkbox = InputElement(type: 'checkbox')
+          InputElement checkbox = InputElement(type: "checkbox")
             ..checked = field.done;
 
           // Dodawanie obsługi zdarzeń dla checkbox
@@ -63,9 +65,11 @@ class TodoModel {
               .listen((Event event) => field.done = checkbox.checked!);
 
           return DivElement()
-            ..classes.add('check-field')
-            ..children
-                .addAll([checkbox, ParagraphElement()..text = field.content]);
+            ..classes.add("check-field")
+            ..children.addAll(<Element>[
+              checkbox,
+              ParagraphElement()..text = field.content
+            ]);
         }).toList());
 
   String get json => jsonEncode({
