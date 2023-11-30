@@ -6,9 +6,22 @@ import 'package:todo_app/models/todo_model.dart';
 class DataManager {
   final File _file = File(path.join(Directory.current.path, "data.json"));
 
+  static DataManager? _instance;
+  static DataManager get instance {
+    _instance ??= DataManager();
+    return _instance!;
+  }
+
   List<dynamic> get data => jsonDecode(_file.readAsStringSync());
 
-  void addTodo(todo) => _file.writeAsStringSync(jsonEncode(data + [todo]));
+  bool _isAvailable(int id) => data.any((el) => el["id"] == id);
 
-  TodoModel getByID(int sessionStorage) {}
+  void save(TodoModel todo) => _file.writeAsStringSync(jsonEncode(_isAvailable(todo.id!)
+      ? (data..[data.indexWhere((el) => el["id"] == todo.id)] = todo.json)
+      : [...data, todo.json]));
+
+
+  TodoModel getByID(int id) => _isAvailable(id)
+      ? TodoModel.fromJson(data.firstWhere((el) => el["id"] == id))
+      : throw Exception("Could not find todo with id $id");
 }

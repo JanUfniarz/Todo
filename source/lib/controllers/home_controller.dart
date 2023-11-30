@@ -1,6 +1,8 @@
 import 'dart:html';
 import 'package:todo_app/models/todo_model.dart';
 
+import '../models/check_field.dart';
+
 void main() {
   DivElement todos = (document.querySelector('#todos')! as DivElement)
       ..children.add(test());
