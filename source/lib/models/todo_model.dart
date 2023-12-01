@@ -52,11 +52,11 @@ class TodoModel {
       ] +
           checkFields.map((field) => field.buildElement).toList());
 
-  String get json => jsonEncode({
-        "id": id,
-        "title": title,
-        "checkFields": checkFields
-            .map((field) => field.json)
-            .toList(),
-  });
+  dynamic get json => {
+    "id": id,
+    "title": title,
+    "checkFields": checkFields
+        .map((field) => field.json)
+        .toList(),
+  };
 }

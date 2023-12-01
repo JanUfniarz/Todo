@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:html';
 
 class CheckField {
@@ -25,8 +24,8 @@ class CheckField {
         TextInputElement()..value = content
       ]);
 
-  String get json => jsonEncode({
+  dynamic get json => {
     "done": done,
     "content": content
-  });
+  };
 }

@@ -1,16 +1,19 @@
 import 'dart:html';
 
-import 'package:todo_app/data/data_manager.dart';
+import 'package:todo_app/data/data_connector.dart';
 import 'package:todo_app/models/todo_model.dart';
 
 import '../models/check_field.dart';
 
-void main() {
+Future<void> main() async {
   int? id = window.sessionStorage["todo_id"] != null
       ? int.parse(window.sessionStorage["todo_id"]!)
       : null;
   DivElement todoView = (document.querySelector("#todo-view") as DivElement)
-      ..children.add(model(id).buildElement);
+      ..children.add((id == null
+          ? TodoModel.empty()
+          : await DataConnector.getByID(id)
+      ).buildElement);
 
   DivElement addField = (document.querySelector("#add-field") as DivElement);
   (addField.children[1] as ButtonElement).onClick.listen((event) {
@@ -21,10 +24,6 @@ void main() {
     );
   });
   (document.querySelector("#save-button") as ButtonElement)
-      .onClick.listen((event) => DataManager.instance.save(
+      .onClick.listen((event) => DataConnector.save(
       TodoModel.fromElement(todoView.children[0])));
 }
-
-TodoModel model(int? id) => id == null
-    ? TodoModel.empty()
-    : DataManager.instance.getByID(id);
