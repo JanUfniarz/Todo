@@ -45,14 +45,19 @@ def save():
 
 @app.route("/todo/", methods=["GET"])
 def get():
-    id_: int = int(request.args.get('id'))
-    if is_available(id_):
-        return jsonify(dict(
-            message=f"todo {id_} got successfully",
-            content=next(el for el in data() if el["id"] == id_)))
+    if "id" in request.args:
+        id_: int = int(request.args.get('id'))
+        if is_available(id_):
+            return jsonify(dict(
+                message=f"todo {id_} got successfully",
+                content=next(el for el in data() if el["id"] == id_)))
+        else:
+            return jsonify(dict(
+                message=f"todo {id_} do not exist"))
     else:
         return jsonify(dict(
-            message=f"todo {id_} do not exist"))
+            message=f"todos got successfully",
+            content=data()))
 
 
 if __name__ == "__main__":

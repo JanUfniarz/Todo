@@ -6,6 +6,9 @@ import 'package:todo_app/models/todo_model.dart';
 import '../models/check_field.dart';
 
 Future<void> main() async {
+
+  print("savedID = ${window.sessionStorage["saved_id"]}");
+
   int? id = window.sessionStorage["todo_id"] != null
       ? int.parse(window.sessionStorage["todo_id"]!)
       : null;
@@ -16,14 +19,22 @@ Future<void> main() async {
       ).buildElement);
 
   DivElement addField = (document.querySelector("#add-field") as DivElement);
-  (addField.children[1] as ButtonElement).onClick.listen((event) {
+  (addField.children[1] as ButtonElement).onClick.listen((event) =>
     todoView.children.add(
         CheckField(
             content: (addField.children[0] as TextInputElement).value!
-        ).buildElement
-    );
-  });
+        ).buildElement));
+
   (document.querySelector("#save-button") as ButtonElement)
-      .onClick.listen((event) => DataConnector.save(
-      TodoModel.fromElement(todoView.children[0])));
+    .onClick.listen((event) async {
+
+    await DataConnector.save(
+        TodoModel.fromElement(todoView.children[0])
+          ..checkFields.addAll(todoView.children
+              .sublist(1)
+              .map((el) => CheckField.fromElement(el))
+              .toList()));
+
+    window.location.href = 'index.html';
+  });
 }

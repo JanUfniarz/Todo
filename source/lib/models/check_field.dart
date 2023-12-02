@@ -11,8 +11,8 @@ class CheckField {
         done = json['done'];
 
   CheckField.fromElement(Element element)
-      : done = (element.querySelector('input[type="checkbox"]')
-  as InputElement).checked ?? false,
+      : done = (element.querySelector('input[type="checkbox"]') as InputElement)
+            .checked ?? false,
         content = (element.querySelector('input[type="text"]') as TextInputElement)
             .value ?? '';
 

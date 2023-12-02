@@ -1,22 +1,24 @@
 import 'dart:html';
-import 'package:todo_app/models/todo_model.dart';
 
-import '../models/check_field.dart';
+import '../data/data_connector.dart';
 
-void main() {
-  DivElement todos = (document.querySelector('#todos')! as DivElement)
-      ..children.add(test());
-  ButtonElement addButton = (document.querySelector('#add-button')! as ButtonElement)
-      ..onClick.listen((event) {
+void main() async {
+  (document.querySelector('#todos')! as DivElement)
+      .children.addAll((await DataConnector.getAll())
+      .map((el) => DivElement()
+        ..classes.add("card")
+        ..text = el.title
+        ..setAttribute('todo-id', el.id ?? 'null'))
+      .map((div) => div
+        ..onClick.listen((event) {
+          window.sessionStorage["todo_id"] =
+              div.getAttribute("todo-id") ?? "null";
+          window.location.href = 'todo_list.html';
+        })));
+
+  (document.querySelector('#add-button')! as ButtonElement)
+      .onClick.listen((event) {
         window.sessionStorage.remove("todo_id");
         window.location.href = 'todo_list.html';
   });
 }
-
-
-DivElement test() => TodoModel(
-        id: 4, title: "Tytuł testowego",
-        checkFields: [
-          CheckField(content: "testowe"
-          )
-        ]).buildElement;
