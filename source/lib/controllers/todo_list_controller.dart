@@ -17,7 +17,7 @@ Future<void> main() async {
       ..children.add((id == null
           ? TodoModel.empty()
           : await DataConnector.getByID(id)
-      ).buildElement);
+      ).view);
 
   (document.querySelector("#add-field") as ButtonElement).onClick.listen((event) =>
     todoView.children.add(CheckField.empty().buildElement));

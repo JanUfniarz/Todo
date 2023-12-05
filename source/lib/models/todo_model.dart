@@ -41,7 +41,7 @@ class TodoModel {
     window.sessionStorage["saved_id"] = (id! + 1).toString();
   }
 
-  DivElement get buildElement => DivElement()
+  DivElement get view => DivElement()
       ..classes.add('todo')
       ..setAttribute('todo-id', id ?? 'null')
       ..children.addAll(<Element>[
@@ -52,6 +52,26 @@ class TodoModel {
             ..text = title)
       ] +
           checkFields.map((field) => field.buildElement).toList());
+
+  DivElement get card => DivElement()
+    ..classes.add("card")
+    ..onClick.listen((event) {
+      window.sessionStorage["todo_id"] = id.toString();
+      window.location.href = 'todo_list.html';
+    })
+    ..children.addAll([
+      HeadingElement.h6()
+        ..text = title,
+      Element.ul()
+        ..children.addAll([
+          for (var checkField in checkFields.take(3)) Element.li()
+            ..text = ((List<String> content) => "${content
+                .take(2)
+                .toList()
+                .join(' ')} ${content.length > 2 ? ' ...' : ''}")
+              (checkField.content.split(' '))
+        ])
+    ]);
 
   dynamic get json => {
     "id": id,
