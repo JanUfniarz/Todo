@@ -9,8 +9,8 @@ button {
 
 #todos {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 100px)); /* Równomierne rozmieszczenie o szerokości 100px */
-    gap: 10px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16vw;
 }
 
 .action-bar, h1 {
@@ -27,6 +27,15 @@ h1 {
     background-color: rgb(215, 186, 125);
 }
 
-.card {
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+.card {
+    background-color: rgb(56, 114, 94);
+    margin-top: 6vh;
+    padding: 15px;
+    border-radius: 20px;
 }
