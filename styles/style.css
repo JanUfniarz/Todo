@@ -1,3 +1,10 @@
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
 body {
     background-color: rgb(52, 53, 65);
 }
@@ -19,7 +26,7 @@ button {
     align-items: center;
 }
 
-h1 {
+h1, h3 {
     color: rgb(195, 101, 64);
 }
 
@@ -27,32 +34,38 @@ h1 {
     background-color: rgb(215, 186, 125);
 }
 
-.center {
+.row {
     display: flex;
-    justify-content: center;
+    flex-direction: row;
     align-items: center;
 }
 
-.card {
+.check-field > p {
+    background-color: rgb(32, 33, 35);
+    border-radius: 5px;
+    padding: 14px;
+    color: rgb(197, 209, 199);
+}
+
+.check-field > input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    background-color: blueviolet;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#add-field {
+    background-color: rgb(31, 109, 45);
+    margin-right: 10px;
+}
+
+#save-button {
     background-color: rgb(185, 171, 250);
-    margin-top: 6vh;
-    padding: 15px;
-    border-radius: 20px;
-}
-
-.card > h6 {
-    margin-top: 6px; 
-    margin-bottom: 6px;
-    color: rgb(0, 48, 86);
-    text-align: center;
-}
-
-li {
-    margin-top: 4px; 
-    margin-bottom: 4px;
-    color: rgb(0, 48, 86);
-}
-
-ul {
-    padding-left: 15px;
+    margin-left: 10px;
 }

@@ -7,17 +7,18 @@ import '../models/check_field.dart';
 
 Future<void> main() async {
 
-  print("savedID = ${window.sessionStorage["saved_id"]}");
-
   int? id = window.sessionStorage["todo_id"] != null
       ? int.parse(window.sessionStorage["todo_id"]!)
       : null;
 
+  TodoModel model = id == null
+      ? TodoModel.empty()
+      : await DataConnector.getByID(id);
+
+  document.title = model.title;
+
   DivElement todoView = (document.querySelector("#todo-view") as DivElement)
-      ..children.add((id == null
-          ? TodoModel.empty()
-          : await DataConnector.getByID(id)
-      ).view);
+      ..children.add(model.view);
 
   (document.querySelector("#add-field") as ButtonElement).onClick.listen((event) =>
     todoView.children.add(CheckField.empty().buildElement));

@@ -21,7 +21,7 @@ class CheckField {
             .text ?? '';
 
   DivElement get buildElement => DivElement()
-      ..classes.add("check-field")
+      ..classes.addAll(["check-field", "row"])
       ..children.addAll(<Element>[
         InputElement(type: "checkbox")
           ..checked = done,

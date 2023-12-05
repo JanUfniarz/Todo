@@ -19,7 +19,7 @@ class TodoModel {
 
   TodoModel.fromElement(Element element)
       : id = int.tryParse(element.getAttribute('todo-id') ?? 'null'),
-        title = (element.children[0].children[0] as HeadingElement).text!,
+        title = (element.children[0] as HeadingElement).text!,
         checkFields = element
             .querySelectorAll('.check-field')
             .map((fieldDiv) => CheckField.fromElement(fieldDiv))
@@ -45,11 +45,9 @@ class TodoModel {
       ..classes.add('todo')
       ..setAttribute('todo-id', id ?? 'null')
       ..children.addAll(<Element>[
-        LabelElement()
-          ..text = "Tittle: "
-          ..children.add(HeadingElement.h3()
+        HeadingElement.h3()
             ..contentEditable = "true"
-            ..text = title)
+            ..text = title
       ] +
           checkFields.map((field) => field.buildElement).toList());
 
