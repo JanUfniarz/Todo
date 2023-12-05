@@ -9,7 +9,8 @@ button {
 
 #todos {
     display: grid;
-
+    grid-template-columns: repeat(auto-fill, minmax(100px, 100px)); /* Równomierne rozmieszczenie o szerokości 100px */
+    gap: 10px;
 }
 
 .action-bar, h1 {
@@ -24,4 +25,8 @@ h1 {
 
 #add-button {
     background-color: rgb(215, 186, 125);
+}
+
+.card {
+
 }

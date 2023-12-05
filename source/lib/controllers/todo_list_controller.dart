@@ -12,18 +12,15 @@ Future<void> main() async {
   int? id = window.sessionStorage["todo_id"] != null
       ? int.parse(window.sessionStorage["todo_id"]!)
       : null;
+
   DivElement todoView = (document.querySelector("#todo-view") as DivElement)
       ..children.add((id == null
           ? TodoModel.empty()
           : await DataConnector.getByID(id)
       ).buildElement);
 
-  DivElement addField = (document.querySelector("#add-field") as DivElement);
-  (addField.children[1] as ButtonElement).onClick.listen((event) =>
-    todoView.children.add(
-        CheckField(
-            content: (addField.children[0] as TextInputElement).value!
-        ).buildElement));
+  (document.querySelector("#add-field") as ButtonElement).onClick.listen((event) =>
+    todoView.children.add(CheckField.empty().buildElement));
 
   (document.querySelector("#save-button") as ButtonElement)
     .onClick.listen((event) async {

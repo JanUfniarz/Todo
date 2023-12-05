@@ -8,11 +8,8 @@ void main() async {
       .map((el) => DivElement()
         ..classes.add("card")
         ..text = el.title
-        ..setAttribute('todo-id', el.id ?? 'null'))
-      .map((div) => div
         ..onClick.listen((event) {
-          window.sessionStorage["todo_id"] =
-              div.getAttribute("todo-id") ?? "null";
+          window.sessionStorage["todo_id"] = el.id.toString();
           window.location.href = 'todo_list.html';
         })));
 
