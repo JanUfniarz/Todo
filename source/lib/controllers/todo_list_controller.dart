@@ -35,4 +35,8 @@ Future<void> main() async {
 
     window.location.href = 'index.html';
   });
+
+  (document.querySelector("#delete-button") as ButtonElement)
+    .onClick.listen((event) => DataConnector.delete(id)
+      .then((value) => window.location.href = 'index.html'));
 }

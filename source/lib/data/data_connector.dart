@@ -31,4 +31,6 @@ class DataConnector {
   })((jsonDecode(utf8.decode(
       (await http.get(Uri.parse(url), headers: headers)).bodyBytes))["content"] as List<dynamic>)
       .map((el) => TodoModel.fromJson(el)).toList());
+
+  static Future<void> delete(int? id) async => http.delete(Uri.parse("$url?id=$id"));
 }

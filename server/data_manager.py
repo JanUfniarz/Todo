@@ -17,6 +17,11 @@ def is_available(id_: int) -> bool:
     return any(el["id"] == id_ for el in data())
 
 
+def rewrite(data_: list[dict]):
+    with open(file_path, 'w') as file:
+        json.dump(data_, file)
+
+
 @app.after_request
 def after_request(response):
     response.headers.add('Access-Control-Allow-Origin', '*')
@@ -28,8 +33,8 @@ def after_request(response):
 @app.route("/todo/", methods=["POST", "PUT"])
 def save():
     todo: dict = request.get_json()
+    todo["checkFields"] = [field for field in todo["checkFields"] if field["content"]]
     res: list[dict] = data()
-    mes: str = ""
     if is_available(todo["id"]):
         res[next((i for i, el in enumerate(
             res) if el["id"] == todo["id"]), None)] = todo
@@ -37,8 +42,8 @@ def save():
     else:
         res.append(todo)
         mes = "added"
-    with open(file_path, 'w') as file:
-        json.dump(res, file)
+
+    rewrite(res)
     return jsonify(dict(
         message=f"todo {todo['id']} {mes} successfully!"))
 
@@ -58,6 +63,13 @@ def get():
         return jsonify(dict(
             message=f"todos got successfully",
             content=data()))
+
+
+@app.route("/todo/", methods=["DELETE"])
+def delete():
+    rewrite([todo for todo in data()
+             if todo["id"] != int(request.args.get("id"))])
+    return jsonify(dict(message="todo deleted"))
 
 
 if __name__ == "__main__":

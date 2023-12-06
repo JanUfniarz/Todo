@@ -30,6 +30,10 @@ h1, h3 {
     color: rgb(195, 101, 64);
 }
 
+h3 {
+    text-align: center;
+}
+
 #add-button {
     background-color: rgb(215, 186, 125);
 }
@@ -67,5 +71,11 @@ h1, h3 {
 
 #save-button {
     background-color: rgb(185, 171, 250);
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#delete-button {
+    background-color: red;
     margin-left: 10px;
 }
